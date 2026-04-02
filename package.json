@@ -1,0 +1,23 @@
+{
+  "name": "telegram-bot",
+  "version": "1.0.0",
+  "description": "Bot Telegram modular menggunakan library Telegraf dan Node.js",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node index.js"
+  },
+  "keywords": [
+    "telegram",
+    "bot",
+    "telegraf",
+    "nodejs",
+    "javascript"
+  ],
+  "author": "Alchi",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^17.4.0",
+    "telegraf": "^4.16.3"
+  }
+}
