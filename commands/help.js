@@ -7,10 +7,7 @@ module.exports = {
 
 Berikut adalah perintah yang bisa kamu gunakan:
 /start - Memulai percakapan dengan bot
-/help - Menampilkan pesan bantuan ini
-
-Kerennya Telegraf, kode kita jadi lebih bersih!
-        `;
+/help - Menampilkan pesan bantuan ini`;
 
         // Membalas pesan dengan format Markdown
         ctx.replyWithMarkdown(helpMessage);
