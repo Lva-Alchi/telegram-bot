@@ -1,13 +1,23 @@
+const userService = require('../database/services/userService');
+
 module.exports = {
     name: 'start',
-    description: 'Menyapa pengguna saat memulai bot',
-    execute(ctx) {
-        // Mengambil nama depan pengirim, default ke 'Teman' jika kosong
-        const firstName = ctx.from.first_name || 'Teman';
+    description: 'Menyapa pengguna dan mendaftarkan ke database',
+    async execute(ctx) {
+        // Ambil data dari Telegram
+        const userId = ctx.from.id;
+        const username = ctx.from.username || ctx.from.first_name || 'Teman';
         
-        const replyMessage = `Halo ${firstName}! 👋\nSelamat datang di bot ini. Ketik /help untuk melihat apa yang bisa aku lakukan.`;
+        // --- PROSES DATABASE SANGAT SIMPEL ---
+        // Bot tidak perlu tahu ini pakai JSON atau MongoDB!
+        const userData = await userService.getOrCreateUser(userId, username);
         
-        // Membalas pesan secara langsung
-        ctx.reply(replyMessage);
+        // Balas pesan ke user
+        const replyMessage = `Halo ${username}! 👋\n\n` +
+                             `Kamu berhasil terdaftar di sistem kami.\n` +
+                             `🆔 Custom ID: \`${userData.customId}\`\n` +
+                             `🔋 Sisa Kuota: *${userData.limitQuota}* kali`;
+                             
+        ctx.replyWithMarkdown(replyMessage);
     }
 };
