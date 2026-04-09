@@ -1,6 +1,9 @@
 // Memuat konfigurasi dari file .env
 require('dotenv').config();
 
+const { connectDB } = require('./database/connection');
+connectDB();
+
 const { Telegraf } = require('telegraf');
 const fs = require('fs');
 const path = require('path');
