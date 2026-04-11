@@ -4,20 +4,19 @@ module.exports = {
     name: 'start',
     description: 'Menyapa pengguna dan mendaftarkan ke database',
     async execute(ctx) {
-        // Ambil data dari Telegram
         const userId = ctx.from.id;
         const username = ctx.from.username || ctx.from.first_name || 'Teman';
         
-        // --- PROSES DATABASE SANGAT SIMPEL ---
-        // Bot tidak perlu tahu ini pakai JSON atau MongoDB!
-        const userData = await userService.getOrCreateUser(userId, username);
-        
+        let userData = await userService.getUser(userId);
+        if (!userData) {
+          const msg = `Halo ${username}! \n\n Kamu belum terdaftar di database nih... > ketik /login untuk daftar`
+          ctx.replyWithMarkdown(msg);
+          
+        } else {
         // Balas pesan ke user
-        const replyMessage = `Halo ${username}! 👋\n\n` +
-                             `Kamu berhasil terdaftar di sistem kami.\n` +
-                             `🆔 Custom ID: \`${userData.customId}\`\n` +
-                             `🔋 Sisa Kuota: *${userData.limitQuota}* kali`;
-                             
+        const replyMessage = `Selamat datang kembali ${username}! 👋\n\n` +
+                             `Apa kabar? Baik baik aja kan...\n`;
         ctx.replyWithMarkdown(replyMessage);
+      }
     }
 };

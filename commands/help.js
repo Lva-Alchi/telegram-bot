@@ -8,8 +8,9 @@ module.exports = {
 Berikut adalah perintah yang bisa kamu gunakan:
 /start - Memulai percakapan dengan bot
 /help - Menampilkan pesan bantuan ini
+/login - Daftar untuk pertama kali !
 
-Under Development!
+Bot Under Development!
         `;
 
         // Membalas pesan dengan format Markdown

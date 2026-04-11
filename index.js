@@ -41,7 +41,7 @@ for (const file of commandFiles) {
 
 // Menjalankan bot
 bot.launch();
-console.log('🤖 Bot Telegram (Telegraf) sedang berjalan...');
+console.log(`\n\n🤖 Bot Telegram (Telegraf) sedang berjalan...`);
 
 // Menghentikan bot dengan aman (Graceful stop) jika server dimatikan
 process.once('SIGINT', () => bot.stop('SIGINT'));

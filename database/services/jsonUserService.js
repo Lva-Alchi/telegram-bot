@@ -1,48 +1,37 @@
-const fs = require('fs').promises;
-const path = require('path');
-
-// Lokasi file akan otomatis dibuat di folder utama project-mu
-const dbPath = path.join(__dirname, '../../database.json');
-
-async function readDB() {
-    try {
-        const data = await fs.readFile(dbPath, 'utf8');
-        return JSON.parse(data);
-    } catch (error) {
-        // Jika file belum ada, buat otomatis
-        const initialData = { users: [] };
-        await fs.writeFile(dbPath, JSON.stringify(initialData, null, 2));
-        return initialData;
-    }
-}
-
-async function writeDB(data) {
-    await fs.writeFile(dbPath, JSON.stringify(data, null, 2)); 
-}
-
 module.exports = {
-    async getOrCreateUser(telegramId, username) {
+    // Fungsi 1: Hanya untuk MENCARI data user
+    async getUser(telegramId) {
         try {
             const db = await readDB();
-            let user = db.users.find(u => u.telegramId === telegramId.toString());
-            
-            if (!user) {
-                user = {
-                    telegramId: telegramId.toString(),
-                    username: username || 'Unknown',
-                    customId: `USER-${telegramId}`,
-                    limitQuota: 100,
-                    language: 'id',
-                    joinedAt: new Date().toISOString()
-                };
-                
-                db.users.push(user);
-                await writeDB(db);
-                console.log(`[DB-JSON] User baru terdaftar: ${username}`);
-            }
-            return user;
+            const user = db.users.find(u => u.telegramId === telegramId.toString());
+            return user || null; // Mengembalikan data user atau null jika tidak ada
         } catch (error) {
-            console.error('Error JSON getOrCreateUser:', error);
+            console.error('Error JSON getUser:', error);
+            throw error;
+        }
+    },
+
+    // Fungsi 2: Hanya untuk MEMBUAT data user baru
+    async createUser(telegramId, username) {
+        try {
+            const db = await readDB();
+            
+            const newUser = {
+                telegramId: telegramId.toString(),
+                username: username || 'Unknown',
+                customId: `USER-${telegramId}`,
+                limitQuota: 100,
+                language: 'id',
+                joinedAt: new Date().toISOString()
+            };
+            
+            db.users.push(newUser);
+            await writeDB(db); // Simpan ke file database.json
+            
+            console.log(`[DB-JSON] User baru terdaftar: ${username}`);
+            return newUser;
+        } catch (error) {
+            console.error('Error JSON createUser:', error);
             throw error;
         }
     }
