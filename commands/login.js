@@ -10,7 +10,7 @@ module.exports = {
         let userData = await userService.getUser(userId);
         
         if (!userData) {
-          const createData = await userService.createUser(userId, username);
+          userData = await userService.createUser(userId, username);
           
           const msg = `Halo ${username}! 👋\n\n` +
                              `Kamu berhasil terdaftar di sistem kami.\n` +
