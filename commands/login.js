@@ -16,7 +16,7 @@ module.exports = {
                              `Kamu berhasil terdaftar di sistem kami.\n` +
                              `🆔 Custom ID: \`${userData.customId}\`\n` +
                              `🔋 Sisa Kuota: *${userData.limitQuota}* kali`;
-          ctx.replyWithMarkdown(msg);
+          await ctx.replyWithMarkdown(msg);
           
         } else {
           const msg = `Hai ${username}! 👋\n\n` +
