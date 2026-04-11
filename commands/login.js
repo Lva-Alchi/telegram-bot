@@ -1,6 +1,6 @@
 const userService = require('../database/services/userService');
 
-module.export = {
+module.exports = {
       name: 'login',
       description: 'login to create your first account!',
       async execute(ctx) {
@@ -19,9 +19,9 @@ module.export = {
           ctx.replyWithMarkdown(msg);
           
         } else {
-          const msg = `Hai ${username}!\n\n` +
-          `Kamu sudah terdaftar dengan ID \`${userData.customId}\`\n\n` +
-          `Kamu punya *${userData.limitQuota}* limit pemggunaan yang tersia!`;
+          const msg = `Hai ${username}! 👋\n\n` +
+          `Kamu sudah terdaftar dengan \`🆔 ${userData.customId}\`\n` +
+          `Kamu punya *${userData.limitQuota}*⚡ limit penggunaan yang tersia!`;
           
           ctx.replyWithMarkdown(msg);
         }
