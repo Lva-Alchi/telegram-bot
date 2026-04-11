@@ -10,13 +10,13 @@ module.exports = {
         let userData = await userService.getUser(userId);
         
         if (!userData) {
-          const createData = await userService.createUser(userId, username);
+          userData = await userService.createUser(userId, username);
           
           const msg = `Halo ${username}! 👋\n\n` +
                              `Kamu berhasil terdaftar di sistem kami.\n` +
                              `🆔 Custom ID: \`${userData.customId}\`\n` +
                              `🔋 Sisa Kuota: *${userData.limitQuota}* kali`;
-          ctx.replyWithMarkdown(msg);
+          await ctx.replyWithMarkdown(msg);
           
         } else {
           const msg = `Hai ${username}! 👋\n\n` +
