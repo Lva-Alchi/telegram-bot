@@ -105,26 +105,61 @@ bot.use(async (ctx, next) => {
     return next();
 });
 
-// --- PENANGANAN TOMBOL MULAI REGISTRASI ---
-// Ini akan merespon ketika tombol "🚀 Login / Sign-Up" ditekan
+// --- BUTTON INTERACTION ---
 bot.action('btn_login', async (ctx) => {
-    await ctx.answerCbQuery(); // Matikan animasi loading di tombol
-    
-    // Kita arahkan paksa bot untuk mengeksekusi file commands/login.js
+    await ctx.answerCbQuery();
     const startCommand = bot.commandsList.get('login');
     if (startCommand) {
-        // Rekayasa sedikit agar file start.js mengira user mengetik /start
         ctx.message = { text: '/login' }; 
         await startCommand.execute(ctx);
     } else {
         await ctx.reply('Silakan ketik /login secara manual ya.');
     }
 });
-// -----------------------------------------
+
+// Jika user memencet tombol "👤 Profil" di menu bawah, jalankan command profil!
+bot.hears('👤 Profil', async (ctx) => {
+    const profilCommand = bot.commandsList.get('profil');
+    if (profilCommand) await profilCommand.execute(ctx);
+});
+
+bot.hears('💳 Cek Kuota', async (ctx) => {
+    await ctx.reply(`🔋 Sisa Kuota kamu saat ini adalah: *${ctx.dbUser.limitQuota}*`, { parse_mode: 'Markdown' });
+});
+
+bot.hears('❌ Close', async (ctx) => {
+    // Cara menghilangkan menu bawah jika user ingin mengetik biasa lagi
+    const { Markup } = require('telegraf');
+    await ctx.reply('Menu ditutup. Ketik /menu untuk membuka kembali.', Markup.removeKeyboard());
+});
+
+// Menangkap tombol 'action_lang_en'
+bot.action('action_lang_en', async (ctx) => {
+    await ctx.answerCbQuery(); // Matikan animasi loading di tombol
+    
+    // Update ke database
+    await userService.updateUser(ctx.from.id, { language: 'en' });
+    
+    // Edit teks pesan profilnya secara langsung (tanpa mengirim pesan baru)
+    await ctx.editMessageText('✅ Language successfully changed to English!');
+});
+
+// Menangkap tombol 'action_lang_id'
+bot.action('action_lang_id', async (ctx) => {
+    await ctx.answerCbQuery(); 
+    await userService.updateUser(ctx.from.id, { language: 'id' });
+    await ctx.editMessageText('✅ Bahasa berhasil diubah ke Indonesia!');
+});
+
+bot.action('action_tutup', async (ctx) => {
+    await ctx.answerCbQuery();
+    await ctx.deleteMessage();
+});
+
+// -------------------------------------
 
 bot.launch();
 console.log(`\n\n🤖 Bot Telegram (Telegraf) sedang berjalan...`);
 
-// Menghentikan bot dengan aman (Graceful stop) jika server dimatikan
 process.once('SIGINT', () => bot.stop('SIGINT'));
 process.once('SIGTERM', () => bot.stop('SIGTERM'));
