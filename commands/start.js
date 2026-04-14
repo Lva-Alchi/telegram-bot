@@ -14,7 +14,6 @@ module.exports = {
           ctx.replyWithMarkdown(msg);
           
         } else {
-        // Balas pesan ke user
         const replyMessage = t(userData.language, 'welcome_back', {name: username, id: userId, quota: userData.limitQuota});
         ctx.replyWithMarkdown(replyMessage);
       }
