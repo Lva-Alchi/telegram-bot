@@ -7,10 +7,10 @@ module.exports = {
     async execute(ctx) {
         const userId = ctx.from.id;
         const username = ctx.from.username || ctx.from.first_name || 'Teman';
-        
+        const tempLang = ctx.dbLang;
         let userData = await userService.getUser(userId);
         if (!userData) {
-          const msg = t(userData.language, 'unregistered', {name: username});
+          const msg = t(tempLang, 'unregistered', {name: username});
           ctx.replyWithMarkdown(msg);
           
         } else {

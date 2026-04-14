@@ -12,12 +12,13 @@ module.exports = {
     },
 
 
-    async createUser(telegramId, username) {
+    async createUser(telegramId, username, language = 'id') {
         try {
             const newUser = await User.create({
                 telegramId: telegramId.toString(),
                 username: username || 'Unknown',
-                customId: `USER-${telegramId}`
+                customId: `USER-${telegramId}`,
+                language: language
             });
             console.log(`[DB-MONGO] User baru terdaftar: ${username}`);
             return newUser;

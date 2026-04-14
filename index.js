@@ -13,7 +13,7 @@ const token = process.env.TELEGRAM_BOT_TOKEN;
 const bot = new Telegraf(token);
 
 // =======================================
-// 1. SANG PENJAGA GERBANG (MIDDLEWARE)
+// 1. MIDDLEWARE
 // =======================================
 bot.use(async (ctx, next) => {
     if (!ctx.from) return next();
@@ -22,9 +22,15 @@ bot.use(async (ctx, next) => {
     const userId = ctx.from.id;
     const tks = ctx.message?.text || '';
     const callbackData = ctx.callbackQuery?.data || '';
-    const userData = await userService.getUser(userId);
     
-    //Block unwanted user
+    //Ambil bahasa sistem User
+    const rawLang = ctx.from.language_code || 'id';
+    let userLang = rawLang.substring(0, 2).toLowerCase();
+    if (userLang !== 'id' && userLang !== 'en') { userLang = 'id' };
+    
+    const userData = await userService.getUser(userId); //Ambil data by userId
+    
+    //Block Banned user
     if (userData && userData.isBanned) {
         const pesanBanned = '🚫 **AKUN DIBLOKIR**\n\nMaaf, kamu telah diblokir oleh Admin karena melanggar aturan dan tidak dapat menggunakan bot ini lagi.';
         
@@ -56,6 +62,7 @@ bot.use(async (ctx, next) => {
 
     // TITIPKAN DATA
     ctx.dbUser = userData;
+    ctx.dbLang = userLang;
     return next();
 });
 

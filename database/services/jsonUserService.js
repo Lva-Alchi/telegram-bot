@@ -12,7 +12,7 @@ module.exports = {
     },
 
     // Fungsi 2: Hanya untuk MEMBUAT data user baru
-    async createUser(telegramId, username) {
+    async createUser(telegramId, username, language = 'id') {
         try {
             const db = await readDB();
             
@@ -22,7 +22,7 @@ module.exports = {
                 username: username || 'Unknown',
                 customId: `USER-${telegramId}`,
                 limitQuota: 100,
-                language: 'id',
+                language: language,
                 joinedAt: new Date().toISOString()
             };
             

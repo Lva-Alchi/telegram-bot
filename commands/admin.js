@@ -27,7 +27,7 @@ module.exports = {
 
         let successCount = 0;
         for (const targetId of targetIds) {
-            const deleted = await userServices.deleteUser(targetId);
+            const deleted = await userServices.deleteUsers(targetId);
             if (deleted) successCount++;
         }
         return ctx.reply(`🗑️ Selesai: Berhasil menghapus ${successCount} dari ${targetIds.length} user.`);
