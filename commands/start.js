@@ -10,12 +10,12 @@ module.exports = {
         
         let userData = await userService.getUser(userId);
         if (!userData) {
-          const msg = t(userData.language, 'unregistered', {name = username})
+          const msg = t(userData.language, 'unregistered', {name: username})
           ctx.replyWithMarkdown(msg);
           
         } else {
         // Balas pesan ke user
-        const replyMessage = t(userData.language, 'welcome_back', {name = username, id = userId, quota = userData.limitQuota});
+        const replyMessage = t(userData.language, 'welcome_back', {name: username, id: userId, quota: userData.limitQuota});
         ctx.replyWithMarkdown(replyMessage);
       }
     }
