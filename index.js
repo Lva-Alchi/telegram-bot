@@ -39,10 +39,7 @@ for (const file of commandFiles) {
 }
 
 // --- (MIDDLEWARE) ---
-bot.commandsList = new Map(); // <--- BARIS INI HARUS ADA!
-
-const commandsPath = path.join(__dirname, 'commands');
-const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
+bot.commandsList = new Map();
 
 for (const file of commandFiles) {
     const filePath = path.join(commandsPath, file);
