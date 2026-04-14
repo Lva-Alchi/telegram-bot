@@ -1,6 +1,6 @@
 // Memuat konfigurasi dari file .env
 require('dotenv').config();
-
+const userService = require('./database/services/userService');
 const { connectDB } = require('./database/connection');
 connectDB();
 
