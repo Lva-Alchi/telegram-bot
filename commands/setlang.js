@@ -18,11 +18,10 @@ module.exports = {
         const updatedUser = await userService.updateUser(userId, { language: newLang });
 
         if (updatedUser) {
-            // Berikan konfirmasi menggunakan bahasa yang baru saja mereka pilih
             const msg = t(updatedUser.language, 'lang_changed');
             ctx.reply(msg);
         } else {
-            ctx.reply('❌ Kamu belum terdaftar. Ketik /start dulu.');
+            ctx.reply('❌ Kamu belum terdaftar. Ketik /login dulu.');
         }
     }
 };

@@ -1,7 +1,7 @@
 {
   "unregistered": "Wah, Selamat Datang {name}!\n\nKamu pengguna baru ya...🤩\nDaftar dulu yuk pakai /login biar bisa lanjut.",
   "welcome_new": "🎉 Selamat datang {name}!\n\nID Kamu: `{id}`\n🎁 Modal awal: *{quota} Kuota*",
-  "welcome_back": "Apa Kabar, {name}! 👋\nSelamat datang kembali!\n\nID Kamu: `{id}`\n🔋 Sisa Kuota: *{quota}*",
+  "welcome_back": "Selamat datang kembali {name}! 👋\n\n🆔 User-`{id}`\n⚡  Kamu memiliki *{quota}* kuota penggunaan tersia.",
   "access_denied": "⛔ Akses Ditolak.",
   "lang_changed": "✅ Bahasa berhasil diubah"
 }
