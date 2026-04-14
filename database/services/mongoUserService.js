@@ -1,11 +1,10 @@
 const User = require('../models/UserMongo');
 
 module.exports = {
-    // Fungsi 1: Hanya untuk MENCARI data user
     async getUser(telegramId) {
         try {
             const user = await User.findOne({ telegramId: telegramId.toString() });
-            return user; // Akan mengembalikan null jika user tidak ditemukan
+            return user;
         } catch (error) {
             console.error('Error Mongoose getUser:', error);
             throw error;
@@ -31,7 +30,6 @@ module.exports = {
     async deleteUsers(telegramIds) {
         try {
             const idsToDelete = Array.isArray(telegramIds) ? telegramIds : [telegramIds.toString()];
-            // Menghapus semua user yang telegramId-nya ada di dalam array idsToDelete
             const result = await User.deleteMany({ telegramId: { $in: idsToDelete } });
             return result.deletedCount;
         } catch (error) {
@@ -42,7 +40,6 @@ module.exports = {
 
     async updateUser(telegramId, updateData) {
         try {
-            // { new: true } agar mengembalikan data yang SUDAH diupdate
             const updatedUser = await User.findOneAndUpdate(
                 { telegramId: telegramId.toString() },
                 { $set: updateData },

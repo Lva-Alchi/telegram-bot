@@ -1,7 +1,7 @@
 {
   "unregistered": "Wow, Welcome {name}!\n\nYou're a new user, huh...🤩\nRegister first using /login so you can continue.",
   "welcome_new": "🎉 Welcome {name}!\n\nYour ID: `{id}`\n🎁 Starting balance: *{quota} Quota*",
-  "welcome_back": "Welcome back, {name}! 👋\n\nYour ID: `{id}`\n🔋 Remaining Quota: *{quota}*",
+  "welcome_back": "Welcome back, {name}! 👋\n\n🆔 User-`{id}`\n⚡ You have *{quota}* Usage Quota remaining.",
   "access_denied": "⛔ Access Denied.",
   "lang_changed": "✅ Language successfully changed to English!"
 }
