@@ -46,7 +46,7 @@ module.exports = {
             const updatedUser = await User.findOneAndUpdate(
                 { telegramId: telegramId.toString() },
                 { $set: updateData },
-                { new: true }
+                { returnDocument: 'after' }
             );
             return updatedUser;
         } catch (error) {
