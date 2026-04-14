@@ -1,4 +1,5 @@
 const userService = require('../database/services/userService');
+const t = require('../lib/utils/i18n');
 
 module.exports = {
     name: 'start',
@@ -9,13 +10,12 @@ module.exports = {
         
         let userData = await userService.getUser(userId);
         if (!userData) {
-          const msg = `Halo ${username}! \n\n Kamu belum terdaftar di database nih... > ketik /login untuk daftar`
+          const msg = t(userData.language, 'unregistered', {name = username})
           ctx.replyWithMarkdown(msg);
           
         } else {
         // Balas pesan ke user
-        const replyMessage = `Selamat datang kembali ${username}! 👋\n\n` +
-                             `Apa kabar? Baik baik aja kan...\n`;
+        const replyMessage = t(userData.language, 'welcome_back', {name = username, id = userId, quota = userData.limitQuota});
         ctx.replyWithMarkdown(replyMessage);
       }
     }
