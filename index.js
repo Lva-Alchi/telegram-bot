@@ -39,6 +39,22 @@ for (const file of commandFiles) {
 }
 
 // --- (MIDDLEWARE) ---
+bot.commandsList = new Map(); // <--- BARIS INI HARUS ADA!
+
+const commandsPath = path.join(__dirname, 'commands');
+const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
+
+for (const file of commandFiles) {
+    const filePath = path.join(commandsPath, file);
+    const command = require(filePath);
+    if ('name' in command && 'execute' in command) {
+        bot.commandsList.set(command.name, command); // Disimpan ke map
+        bot.command(command.name, async (ctx) => {
+             // ...
+        });
+    }
+}
+
 bot.use(async (ctx, next) => {
     // 1. Abaikan event yang tidak memiliki ID User (misal: event bot dimasukkan ke grup)
     if (!ctx.from) return next();
