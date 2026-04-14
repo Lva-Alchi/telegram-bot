@@ -18,18 +18,27 @@ const bot = new Telegraf(token);
 bot.use(async (ctx, next) => {
     if (!ctx.from) return next();
 
+    // PENGECEKAN UTAMA
+    const userData = await userService.getUser(userId);
     const userId = ctx.from.id;
     const tks = ctx.message?.text || '';
     const callbackData = ctx.callbackQuery?.data || '';
-
+    
+    //Block unwanted user
+    if (userData && userData.isBanned) {
+        const pesanBanned = '🚫 **AKUN DIBLOKIR**\n\nMaaf, kamu telah diblokir oleh Admin karena melanggar aturan dan tidak dapat menggunakan bot ini lagi.';
+        
+        if (ctx.message) return await ctx.reply(pesanBanned, { parse_mode: 'Markdown' });
+        if (ctx.callbackQuery) return await ctx.answerCbQuery('Akun kamu telah diblokir Admin!', { show_alert: true });
+        
+        return;
+    }
+    
     // DAFTAR PUTIH (Whitelist)
     if (tks.startsWith('/start') || tks.startsWith('/login') || callbackData === 'btn_login') {
         ctx.dbUser = await userService.getUser(userId);
         return next();
     }
-
-    // PENGECEKAN UTAMA
-    const userData = await userService.getUser(userId);
 
     if (!userData) {
         const pesanTolak = '🛑 **Akses Ditolak!**\n\nKamu belum terdaftar di sistem kami. Silakan registrasi terlebih dahulu untuk menggunakan fitur bot.';

@@ -18,6 +18,7 @@ module.exports = {
             
             const newUser = {
                 telegramId: telegramId.toString(),
+                isBanned: false,
                 username: username || 'Unknown',
                 customId: `USER-${telegramId}`,
                 limitQuota: 100,
