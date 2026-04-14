@@ -19,10 +19,10 @@ bot.use(async (ctx, next) => {
     if (!ctx.from) return next();
 
     // PENGECEKAN UTAMA
-    const userData = await userService.getUser(userId);
     const userId = ctx.from.id;
     const tks = ctx.message?.text || '';
     const callbackData = ctx.callbackQuery?.data || '';
+    const userData = await userService.getUser(userId);
     
     //Block unwanted user
     if (userData && userData.isBanned) {
