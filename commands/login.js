@@ -1,4 +1,5 @@
 const userService = require('../database/services/userService');
+const t = require('../lib/utils/i18n.js');
 
 module.exports = {
       name: 'login',
@@ -12,18 +13,11 @@ module.exports = {
         if (!userData) {
           userData = await userService.createUser(userId, username);
           
-          const msg = `Halo ${username}! 👋\n\n` +
-                             `Kamu berhasil terdaftar di sistem kami.\n` +
-                             `🆔 Custom ID: \`${userData.customId}\`\n` +
-                             `🔋 Sisa Kuota: *${userData.limitQuota}* kali`;
+          const msg = t(userData.language, 'register_success', { id: userData.customId, quota: userData.limit });
           await ctx.replyWithMarkdown(msg);
           
         } else {
-          const msg = `Hai ${username}! 👋\n\n` +
-          `Kamu sudah terdaftar dengan \`🆔 ${userData.customId}\`\n` +
-          `Kamu punya *${userData.limitQuota}*⚡ limit penggunaan yang tersia!`;
-          
-          ctx.replyWithMarkdown(msg);
+          ctx.replyWithMarkdown(await t(userData.language, 'alreadyRegistered', { id: userData.customId, quota: userData.limit }));
         }
       }
 };

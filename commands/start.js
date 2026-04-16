@@ -10,7 +10,7 @@ module.exports = {
         const tempLang = ctx.dbLang;
         let userData = await userService.getUser(userId);
         if (!userData) {
-          const msg = t(tempLang, 'unregistered', {name: username});
+          const msg = t(tempLang, 'not_registered', {name: username});
           ctx.replyWithMarkdown(msg);
           
         } else {
