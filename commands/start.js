@@ -3,7 +3,9 @@ const t = require('../lib/utils/i18n');
 
 module.exports = {
     name: 'start',
+    category: '👥 General',
     description: 'Menyapa pengguna dan mendaftarkan ke database',
+    showInMenu: true,
     async execute(ctx) {
         const userId = ctx.from.id;
         const username = ctx.from.username || ctx.from.first_name || 'Teman';

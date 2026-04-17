@@ -70,7 +70,8 @@ bot.use(async (ctx, next) => {
 // ======================================
 // 2. SISTEM MODULAR (AUTO-LOAD COMMANDS)
 // ======================================
-bot.commandsList = new Map(); // Buat buku telepon
+bot.commandsList = new Map();
+bot.context.commandsList = bot.commandsList;
 
 const commandsPath = path.join(__dirname, 'commands');
 const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));

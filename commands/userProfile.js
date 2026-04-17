@@ -3,7 +3,9 @@ const { Markup } = require('telegraf');
 
 module.exports = {
     name: 'profil',
+    category: '👥 General',
     description: 'Menampilkan informasi profil pengguna',
+    showInMenu: true,
     async execute(ctx) {
         const user = ctx.dbUser;
         const pesan = `👤 **INFORMASI PROFIL**\n\n` +

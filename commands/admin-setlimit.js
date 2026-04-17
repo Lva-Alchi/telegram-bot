@@ -2,7 +2,9 @@ const userService = require('../database/services/userService');
 
 module.exports = {
     name: 'setlimit',
-    description: '[ADMIN] Mengubah limit kuota user',
+    category: '🧑‍💻️ [Admins]',
+    description: 'Mengubah limit kuota user',
+    showInMenu: true,
     async execute(ctx) {
         // 1. Cek Admin
         const adminIds = process.env.ADMIN_IDS.split(',');

@@ -1,7 +1,9 @@
 module.exports = {
     name: 'help',
+    category: '👥 General',
     description: 'Menampilkan panduan penggunaan bot',
-    execute(ctx) {
+    showInMenu: true,
+    async execute(ctx) {
         const helpMessage = `
 *Panduan Penggunaan Bot* 🛠️
 

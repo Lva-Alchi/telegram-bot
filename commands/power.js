@@ -1,10 +1,9 @@
 module.exports = {
-    // Telegraf mendukung penggunaan Array! 
-    // Jadi file ini akan dieksekusi jika admin mengetik /stop ATAU /restart
-    name: ['stop', 'restart'], 
+    name: ['stop', 'restart'],
+    category: '🧑‍💻 [ADMIN]',
     description: '[ADMIN] Mematikan atau memulai ulang bot',
+    showInMenu: true,
     async execute(ctx) {
-        // 1. Lapis Keamanan: Cek ID Admin
         const adminIds = process.env.ADMIN_IDS.split(',');
         const userId = ctx.from.id.toString();
 

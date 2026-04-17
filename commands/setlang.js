@@ -3,7 +3,9 @@ const t = require('../lib/utils/i18n.js');
 
 module.exports = {
     name: 'setlang',
+    category: '👥 General',
     description: 'Mengubah bahasa bot (id/en)',
+    showInMenu: true,
     async execute(ctx) {
         const userId = ctx.from.id;
         const args = ctx.message.text.split(' ');

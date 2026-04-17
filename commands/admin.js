@@ -2,8 +2,10 @@ const userServices = require('../database/services/userService.js');
 const t = require('../lib/utils/i18n.js');
 
 module.exports = {
-  name: ['deleteUser', 'ban', 'unban'], 
-  description: "[ADMIN] commands for admins",
+  name: ['deleteUser', 'ban', 'unban'],
+  category: '🧑‍💻 [ADMIN]'
+  description: "Commands for admins only!",
+  showInMenu: true,
   async execute(ctx) {
     // 1. Check for admins ID
     const adminIds = process.env.ADMIN_IDS.split(',');

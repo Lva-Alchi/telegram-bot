@@ -4,7 +4,9 @@ const execPromise = util.promisify(exec);
 
 module.exports = {
     name: 'checkpkg',
+    category: '🧑‍💻 [ADMIN]',
     description: '[ADMIN] Mengecek keamanan package npm menggunakan npq',
+    showInMenu: true,
     async execute(ctx) {
         const adminIds = process.env.ADMIN_IDS.split(',');
         if (!adminIds.includes(ctx.from.id.toString())) return ctx.reply('⛔ Akses Ditolak.');
