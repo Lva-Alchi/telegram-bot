@@ -5,6 +5,17 @@ const { connectDB } = require('./database/connection');
 const { Telegraf, Markup } = require('telegraf');
 const fs = require('fs');
 const path = require('path');
+const { logSystemError, logUserError } = require('./lib/utils/logger');
+
+//Error Handling
+process.on('uncaughtException', (err) => {
+    logSystemError(err);
+    process.exit(1); 
+});
+process.on('unhandledRejection', (reason) => {
+    const err = reason instanceof Error ? reason : new Error(String(reason));
+    logSystemError(err);
+});
 
 // Mengambil token dan membuat instance bot Telegraf
 const token = process.env.TELEGRAM_BOT_TOKEN;
@@ -146,6 +157,8 @@ for (const filePath of commandFiles) {
         }
     } catch (err) {
         console.error(`❌ Gagal memuat file: ${filePath}\nAlasan:`, err.message);
+        logUserError(error, ctx);
+        await ctx.reply('Maaf, terjadi kesalahan saat menjalankan perintah tersebut.').catch(() => {});
     }
 }
 console.log('--------------------------------\n');
@@ -201,6 +214,11 @@ bot.action('action_tutup', async (ctx) => {
 // 4. START THE BOT
 // ====================================
 connectDB();
+bot.catch((err, ctx) => {
+    console.error(`[TELEGRAF ERROR]`, err);
+    logUserError(err, ctx);
+    ctx.reply('⚠️ Terjadi kesalahan sistem. Laporan error telah dibuat untuk Admin.').catch(() => {});
+});
 bot.launch().then(() => {
     console.log(`\n\n🤖 Bot Telegram (Telegraf) sedang berjalan...`);
 });
