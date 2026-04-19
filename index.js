@@ -68,9 +68,12 @@ bot.use(async (ctx, next) => {
 // ======================================
 // 2. SISTEM MODULAR (AUTO-LOAD COMMANDS)
 // ======================================
-bot.commandsList = new Map();
-bot.context.commandsList = bot.commandsList;
+bot.commandsList = new Map(); 
+bot.context.commandsList = bot.commandsList; // Titipkan ke ctx
 
+const commandsPath = path.join(__dirname, 'commands');
+
+// Kamus Kategori (Silakan sesuaikan)
 const categoryStyles = {
     'general': '🌐 𝐆𝐄𝐍𝐄𝐑𝐀𝐋 🌐',
     'admin': '🛡 𝐀𝐃𝐌𝐈𝐍𝐒 ',
@@ -78,11 +81,18 @@ const categoryStyles = {
     'games': '🎮 𝐆𝐀𝐌𝐄𝐒'
     //etc...
 };
-const commandsPath = path.join(__dirname, 'commands');
 
-//Read Sub-Folders
+
+// Fungsi Pintar Pembaca Subfolder (Rekursif)
 function readAllCommandFiles(dir) {
     let files = [];
+    
+    // Cek apakah foldernya benar-benar ada
+    if (!fs.existsSync(dir)) {
+        console.log(`[ERROR] Folder tidak ditemukan: ${dir}`);
+        return files;
+    }
+
     const items = fs.readdirSync(dir);
 
     for (const item of items) {
@@ -90,44 +100,55 @@ function readAllCommandFiles(dir) {
         const stat = fs.statSync(fullPath);
 
         if (stat.isDirectory()) {
+            console.log(`[SCAN] Memasuki subfolder: ${item}/`);
+            // Panggil diri sendiri untuk masuk ke dalam subfolder
             files = files.concat(readAllCommandFiles(fullPath));
         } else if (item.endsWith('.js')) {
             files.push(fullPath);
         }
     }
     return files;
-};
+}
 
+// Eksekusi pemindaian
+console.log('\n--- 📂 MEMULAI SCAN COMMANDS ---');
 const commandFiles = readAllCommandFiles(commandsPath);
 
-for (const file of commandFiles) {
-    const filePath = path.join(commandsPath, file);
-    const command = require(filePath);
-    
-    if (command.name && command.execute) {
-      const folderName = path.basename(path.dirname(filePath));
-      
-      if (!command.category && folderName !== 'commands') {
-            command.category = categoryStyles[folderName] || folderName;
+for (const filePath of commandFiles) {
+    try {
+        const command = require(filePath);
+        
+        if (command.name && command.execute) {
+            const folderName = path.basename(path.dirname(filePath));
+            
+            // Auto-Kategori
+            if (!command.category && folderName !== 'commands') {
+                command.category = categoryStyles[folderName] || folderName;
+            }
+
+            const commandNames = Array.isArray(command.name) ? command.name : [command.name];
+            
+            for (const name of commandNames) {
+                bot.commandsList.set(name, command); 
+                
+                bot.command(name, async (ctx) => {
+                    try {
+                        await command.execute(ctx);
+                    } catch (error) {
+                        console.error(`Error saat mengeksekusi /${name}:`, error);
+                        await ctx.reply('Maaf, terjadi kesalahan internal.');
+                    }
+                });
+                console.log(`✅ Dimuat: /${name} (Kategori: ${command.category || '📦 Lainnya'})`);
+            }
+        } else {
+            console.log(`⚠️ Dilewati: ${path.basename(filePath)} (Format tidak valid)`);
         }
-      const commandNames = Array.isArray(command.name) ? command.name : [command.name];
-      
-      for (const name of commandNames) {
-        bot.commandsList.set(name, command); 
-        bot.command(name, async (ctx) => {
-          try {
-            await command.execute(ctx);
-            } catch (error) {
-              console.error(`Error saat mengeksekusi /${name}:`, error);
-              await ctx.reply('Maaf, terjadi kesalahan saat menjalankan perintah tersebut.');
-                }
-            });
-            console.log(`[INFO] Berhasil memuat: /${name} | Kategori: ${command.category || '📦 Lainnya'}`);
-        }
-    } else {
-        console.log(`[WARNING] File ${path.basename(filePath)} tidak memiliki struktur yang benar.`);
+    } catch (err) {
+        console.error(`❌ Gagal memuat file: ${filePath}\nAlasan:`, err.message);
     }
 }
+console.log('--------------------------------\n');
 
 
 // ======================================
