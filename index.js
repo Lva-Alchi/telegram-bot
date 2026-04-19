@@ -158,7 +158,7 @@ for (const filePath of commandFiles) {
     } catch (err) {
         console.error(`❌ Gagal memuat file: ${filePath}\nAlasan:`, err.message);
         logUserError(error, ctx);
-        await ctx.reply('Maaf, terjadi kesalahan saat menjalankan perintah tersebut.').catch(() => {});
+        ctx.reply('Maaf, terjadi kesalahan saat menjalankan perintah tersebut.').catch(() => {});
     }
 }
 console.log('--------------------------------\n');
