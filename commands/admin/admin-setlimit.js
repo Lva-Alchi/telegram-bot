@@ -1,4 +1,4 @@
-const userService = require('../database/services/userService');
+const userService = require('../../database/services/userService');
 
 module.exports = {
     name: 'setlimit',

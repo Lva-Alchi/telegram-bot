@@ -98,7 +98,6 @@ const categoryStyles = {
 function readAllCommandFiles(dir) {
     let files = [];
     
-    // Cek apakah foldernya benar-benar ada
     if (!fs.existsSync(dir)) {
         console.log(`[ERROR] Folder tidak ditemukan: ${dir}`);
         return files;
@@ -157,7 +156,7 @@ for (const filePath of commandFiles) {
         }
     } catch (err) {
         console.error(`❌ Gagal memuat file: ${filePath}\nAlasan:`, err.message);
-        logUserError(error, ctx);
+        logUserError(err, ctx);
         ctx.reply('Maaf, terjadi kesalahan saat menjalankan perintah tersebut.').catch(() => {});
     }
 }
