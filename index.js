@@ -2,8 +2,6 @@
 require('dotenv').config();
 const userService = require('./database/services/userService');
 const { connectDB } = require('./database/connection');
-connectDB();
-
 const { Telegraf, Markup } = require('telegraf');
 const fs = require('fs');
 const path = require('path');
@@ -73,29 +71,61 @@ bot.use(async (ctx, next) => {
 bot.commandsList = new Map();
 bot.context.commandsList = bot.commandsList;
 
+const categoryStyles = {
+    'general': '🌐 𝐆𝐄𝐍𝐄𝐑𝐀𝐋 🌐',
+    'admin': '🛡 𝐀𝐃𝐌𝐈𝐍𝐒 ',
+    'user': '👤 𝐔𝐒𝐄𝐑',
+    'games': '🎮 𝐆𝐀𝐌𝐄𝐒'
+    //etc...
+};
 const commandsPath = path.join(__dirname, 'commands');
-const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
+
+//Read Sub-Folders
+function readAllCommandFiles(dir) {
+    let files = [];
+    const items = fs.readdirSync(dir);
+
+    for (const item of items) {
+        const fullPath = path.join(dir, item);
+        const stat = fs.statSync(fullPath);
+
+        if (stat.isDirectory()) {
+            files = files.concat(readAllCommandFiles(fullPath));
+        } else if (item.endsWith('.js')) {
+            files.push(fullPath);
+        }
+    }
+    return files;
+};
+
+const commandFiles = readAllCommandFiles(commandsPath);
 
 for (const file of commandFiles) {
     const filePath = path.join(commandsPath, file);
     const command = require(filePath);
     
     if (command.name && command.execute) {
-        // Simpan ke buku telepon
-        bot.commandsList.set(command.name, command); 
-        
-        // Daftarkan ke Telegraf
-        bot.command(command.name, async (ctx) => {
-            try {
-                await command.execute(ctx);
+      const folderName = path.basename(path.dirname(filePath));
+      
+      if (!command.category && folderName !== 'commands') {
+            command.category = categoryStyles[folderName] || folderName;
+        }
+      const commandNames = Array.isArray(command.name) ? command.name : [command.name];
+      
+      for (const name of commandNames) {
+        bot.commandsList.set(name, command); 
+        bot.command(name, async (ctx) => {
+          try {
+            await command.execute(ctx);
             } catch (error) {
-                console.error(`Error saat mengeksekusi /${command.name}:`, error);
-                await ctx.reply('Maaf, terjadi kesalahan saat menjalankan perintah tersebut.');
-            }
-        });
-        console.log(`[INFO] Berhasil memuat perintah: /${command.name}`);
+              console.error(`Error saat mengeksekusi /${name}:`, error);
+              await ctx.reply('Maaf, terjadi kesalahan saat menjalankan perintah tersebut.');
+                }
+            });
+            console.log(`[INFO] Berhasil memuat: /${name} | Kategori: ${command.category || '📦 Lainnya'}`);
+        }
     } else {
-        console.log(`[WARNING] File ${file} tidak memiliki struktur yang benar.`);
+        console.log(`[WARNING] File ${path.basename(filePath)} tidak memiliki struktur yang benar.`);
     }
 }
 
@@ -146,9 +176,10 @@ bot.action('action_tutup', async (ctx) => {
 });
 
 
-// ==========================================
-// 4. JALANKAN BOT
-// ==========================================
+// ====================================
+// 4. START THE BOT
+// ====================================
+connectDB();
 bot.launch().then(() => {
     console.log(`\n\n🤖 Bot Telegram (Telegraf) sedang berjalan...`);
 });
