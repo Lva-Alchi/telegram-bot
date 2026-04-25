@@ -1,13 +1,12 @@
 const userService = require('../../database/services/userService');
 
-// Helper function untuk efek jeda (Hindari rate-limit Telegram, 700ms adalah angka aman)
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 const simbol = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎', '7️⃣'];
 const getRand = () => simbol[Math.floor(Math.random() * simbol.length)];
 
 module.exports = {
-    name: ['slot', 'gacha'],
+    name: ['slot'],
     description: 'Main mesin slot 3x3 (Harga: 1 Kuota)',
     showInMenu: true,
     async execute(ctx) {
