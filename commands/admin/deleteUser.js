@@ -25,6 +25,10 @@ module.exports = {
       const deleted = await userServices.deleteUsers(targetId);
       if (deleted) successCount++;
         }
-    return ctx.reply(`🗑️ Selesai: Berhasil menghapus ${successCount} dari ${targetIds.length} user.`);
+    if (successCount > 0) {
+      return ctx.reply(`🗑️ Selesai: Berhasil menghapus ${successCount} dari ${targetIds.length} user.`);
+    } else {
+      return ctx.reply('‼️Error: User tidak dalam database bot')
+    }
   }
 };
