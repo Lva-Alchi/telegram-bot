@@ -23,7 +23,7 @@ module.exports = {
             categories[categoryName].push({ names: cmdNames, desc: cmdDesc });
         }
       
-      let menuText = "```༺ 𝐃𝐚𝐟𝐭𝐚𝐫 𝐏𝐞𝐫𝐢𝐧𝐭𝐚𝐡 𝐁𝐨𝐭 ༻\n\n```";
+      let menuText = "༺ 𝐃𝐚𝐟𝐭𝐚𝐫 𝐏𝐞𝐫𝐢𝐧𝐭𝐚𝐡 𝐁𝐨𝐭 ༻\n\n";
 
       for (const [category, commands] of Object.entries(categories)) {
           menuText += `┏━━─> ${category}\n`;

@@ -4,7 +4,7 @@ const execPromise = util.promisify(exec);
 
 module.exports = {
     name: 'checkpkg',
-    description: '[ADMIN] Mengecek keamanan package npm menggunakan npq',
+    description: 'Cek keamanan package NPM',
     showInMenu: true,
     async execute(ctx) {
         const adminIds = process.env.ADMIN_IDS.split(',');

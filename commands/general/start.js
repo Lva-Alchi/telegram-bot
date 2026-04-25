@@ -3,13 +3,14 @@ const t = require('../../lib/utils/i18n');
 
 module.exports = {
     name: 'start',
-    description: 'Menyapa pengguna dan mendaftarkan ke database',
+    description: 'Memulai percakapan dengan bot',
     showInMenu: true,
     async execute(ctx) {
         const userId = ctx.from.id;
         const username = ctx.from.username || ctx.from.first_name || 'Teman';
         const tempLang = ctx.dbLang;
         let userData = await userService.getUser(userId);
+        
         if (!userData) {
           const msg = t(tempLang, 'not_registered', {name: username});
           ctx.replyWithMarkdown(msg);

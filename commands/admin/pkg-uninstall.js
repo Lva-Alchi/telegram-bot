@@ -4,7 +4,7 @@ const execPromise = util.promisify(exec);
 
 module.exports = {
     name: 'uninstall',
-    description: '[ADMIN] Menghapus package npm',
+    description: 'Menghapus package NPM',
     showInMenu: true,
     async execute(ctx) {
         const adminIds = process.env.ADMIN_IDS.split(',');

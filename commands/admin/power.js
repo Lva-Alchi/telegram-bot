@@ -1,6 +1,6 @@
 module.exports = {
     name: ['stop', 'restart'],
-    description: '[ADMIN] Mematikan atau memulai ulang bot',
+    description: 'Mematikan atau restart bot',
     showInMenu: true,
     async execute(ctx) {
         const adminIds = process.env.ADMIN_IDS.split(',');

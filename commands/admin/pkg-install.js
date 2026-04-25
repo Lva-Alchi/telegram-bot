@@ -4,7 +4,7 @@ const execPromise = util.promisify(exec);
 
 module.exports = {
     name: 'install',
-    description: '[ADMIN] Menginstal satu atau banyak package npm',
+    description: 'Menginstal satu atau lebih package NPM',
     showInMenu: true,
     async execute(ctx) {
         // 1. Cek ID Admin
