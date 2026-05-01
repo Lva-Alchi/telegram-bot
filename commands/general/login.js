@@ -1,5 +1,5 @@
-const userService = require('../../database/services/userService');
-const t = require('../../lib/utils/i18n.js');
+const userService = require('../../src/database/services/userService');
+const t = require('../../src/utils/i18n.js');
 
 module.exports = {
       name: 'login',

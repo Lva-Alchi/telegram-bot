@@ -1,11 +1,11 @@
 // Memuat konfigurasi dari file .env
 require('dotenv').config();
-const userService = require('./database/services/userService');
-const { connectDB } = require('./database/connection');
+const userService = require('./src/database/services/userService');
+const { connectDB } = require('./src/database/connection');
 const { Telegraf, Markup } = require('telegraf');
 const fs = require('fs');
 const path = require('path');
-const { logSystemError, logUserError } = require('./lib/utils/logger');
+const { logSystemError, logUserError } = require('./src/utils/logger');
 
 //Error Handling
 process.on('uncaughtException', (err) => {

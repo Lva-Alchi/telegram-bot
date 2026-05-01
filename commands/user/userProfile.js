@@ -2,7 +2,7 @@
 const { Markup } = require('telegraf');
 
 module.exports = {
-    name: 'profil',
+    name: 'profile',
     description: 'Menampilkan informasi profil pengguna',
     showInMenu: true,
     async execute(ctx) {

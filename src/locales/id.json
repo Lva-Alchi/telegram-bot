@@ -1,0 +1,9 @@
+{
+  "not_registered": "Wah, Selamat Datang {name}!\n\nKamu pengguna baru ya...🤩\nDaftar dulu yuk pakai /login biar bisa lanjut.",
+  "register_success": "✅ Akun berhasil didaftarkan\n\nID Kamu:\n USER-`{id}`\n⚡ Kamu mendapatkan *{quota}* limit penggunaan bot",
+  "alreadyRegistered": "Kamu sudah terdaftar dengan 🆔 USER-`{id}`\nKamu punya *{quota}* limit penggunaan tersisa!",
+  "welcome_new": "🎉 Selamat datang {name}!\n\nID Kamu: `{id}`\n🎁 Modal awal: *{quota} Kuota*",
+  "welcome_back": "Selamat datang kembali __*{name}*__! 👋\n\n🆔 User-`{id}`\n⚡  Kamu memiliki *{quota}* kuota penggunaan tersia.",
+  "access_denied": "⛔ Akses Ditolak.",
+  "lang_changed": "✅ Bahasa berhasil diubah"
+}
