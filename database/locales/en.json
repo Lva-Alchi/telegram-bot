@@ -1,9 +1,0 @@
-{
-  "not_registered": "Wow, Welcome {name}!\n\nYou're a new user, huh...🤩\nRegister first using /login so you can continue.",
-  "register_success": "✅ Account successfully registered\n\nYour ID:\n USER-`{id}`\n⚡ You got *{quota}* bot usage limit.",
-  "alreadyRegistered": "You are already registered with \n🆔 USER-`{id}`\nYou have *{quota}* limit usage remaining!",
-  "welcome_new": "🎉 Welcome {name}!\n\nYour ID: `{id}`\n🎁 Starting balance: *{quota} Quota*",
-  "welcome_back": "Welcome back, {name}! 👋\n\n🆔 User-`{id}`\n⚡ You have *{quota}* Usage Quota remaining.",
-  "access_denied": "⛔ Access Denied.",
-  "lang_changed": "✅ Language successfully changed to English!"
-}
